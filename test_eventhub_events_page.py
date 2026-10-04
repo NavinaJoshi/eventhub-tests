@@ -42,7 +42,8 @@ def test_event_filters_and_detail(page: Page):
     # Verify detail page
     expect(page).to_have_url(re.compile(r"/events.*"))
     expect(page.get_by_role("heading", name=title)).to_have_text(title)
-    expect(page.get_by_text(price_text, exact=True)).to_be_visible()
+    priceOnCheckoutPage = page.get_by_text("$").nth(0).text_content()
+    assert priceOnCheckoutPage == price_text
 
     # Back to Events list
     page.get_by_role("link", name="Browse Events", exact=True).click()
